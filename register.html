@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registro – Save Gavarres</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar" role="navigation" aria-label="Main Navigation">
+        <a href="index.html" class="logo">Save Gavarres</a>
+        <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul id="primary-menu" class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="register.html" aria-current="page">Register</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </nav>
+
+    <main class="content" role="main">
+        <h1>Registro</h1>
+        <form id="register-form" novalidate>
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" name="email" placeholder="tu@email.com" required />
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" placeholder="Contraseña" required minlength="6" />
+            <label for="confirm-password">Confirmar Contraseña:</label>
+            <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirmar Contraseña" required minlength="6" />
+            <button type="submit">Registrar</button>
+            <p id="error-message" style="color: red; display: none; margin-top: 1rem;"></p>
+        </form>
+    </main>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const menu = document.querySelector('.menu');
+        menuToggle.addEventListener('click', () => {
+            const expanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
+            menuToggle.setAttribute('aria-expanded', !expanded);
+            menu.classList.toggle('active');
+        });
+
+        // Form validation
+        const form = document.getElementById('register-form');
+        const errorMessage = document.getElementById('error-message');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            errorMessage.style.display = 'none';
+
+            const email = form.email.value.trim();
+            const password = form.password.value;
+            const confirmPassword = form['confirm-password'].value;
+
+            if (!email) {
+                showError('Por favor, ingresa un correo electrónico válido.');
+                return;
+            }
+            if (password.length < 6) {
+                showError('La contraseña debe tener al menos 6 caracteres.');
+                return;
+            }
+            if (password !== confirmPassword) {
+                showError('Las contraseñas no coinciden.');
+                return;
+            }
+
+            alert(`Registro exitoso para: ${email}`);
+            form.reset();
+        });
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
